@@ -28,6 +28,9 @@ class Circle {
         this.color = color;
         this.text = text;
         this.speed = speed
+
+        this.dx = 1 * this.speed;
+        this.dy = 1 * this.speed
     }
 
     draw(context){
@@ -45,20 +48,42 @@ class Circle {
     }
 
     update(){
+
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight)
         this.draw(context)
+
+        if ((this.xpos + this.ratio) > window.innerWidth) this.dx = -this.dx
+        if ((this.xpos - this.ratio) < 0) this.dx = -this.dx
+        if ((this.ypos - this.ratio) < 0) this.dy = -this.dy
+        if ((this.ypos + this.ratio) > window.innerHeight) this.dy = -this.dy
+        this.xpos += this.dx;
+        this.ypos += this.dy
     }
 }
 
 let allCircles = []
 
-const createCircle = (circle) =>{
-    circle.draw(context)
+let counter = 1;
+let randomX = Math.random() * window.innerWidth;
+let randomY = Math.random() * window.innerHeight
+let myCircle = new Circle(randomX, randomY, 50, 'rgb(350, 0,0,55%', counter, 50)
+
+myCircle.draw(context)
+
+let updateCircle = () => {
+    requestAnimationFrame(updateCircle)
+    myCircle.update()
 }
 
+updateCircle()
+
+/*
 for (let i=0; i<1; i++){
     let randomX = Math.random() * window.innerWidth;
     let randomY = Math.random() * window.innerHeight
-    let myCircle = new Circle(randomX, randomY, 50, 'rgb(350, 0,0,55%', i)
+    let myCircle = new Circle(randomX, randomY, 50, 'rgb(350, 0,0,55%', counter)
     allCircles.push(myCircle)
     createCircle(allCircles[i])
+    counter++
 }
+*/
