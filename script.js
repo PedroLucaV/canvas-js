@@ -40,22 +40,32 @@ class Circle {
         context.textBaseline = 'middle'
         context.font = '20px Arial'
         context.fillText(this.text, this.xpos, this.ypos)
-        context.fillStyle = this.color
-        context.fill()
-        context.strokeStyle = 'black'
+        context.strokeStyle = this.color
         context.stroke();
         context.closePath();
     }
 
     update(){
-
+        this.text = counter
         context.clearRect(0, 0, window.innerWidth, window.innerHeight)
         this.draw(context)
 
-        if ((this.xpos + this.ratio) > window.innerWidth) this.dx = -this.dx
-        if ((this.xpos - this.ratio) < 0) this.dx = -this.dx
-        if ((this.ypos - this.ratio) < 0) this.dy = -this.dy
-        if ((this.ypos + this.ratio) > window.innerHeight) this.dy = -this.dy
+        if ((this.xpos + this.ratio) > window.innerWidth){
+             this.dx = -this.dx 
+             counter++
+        }
+        if ((this.xpos - this.ratio) < 0){
+             this.dx = -this.dx
+             counter++
+        }
+        if ((this.ypos - this.ratio) < 0) {
+            this.dy = -this.dy
+            counter++
+        }
+        if ((this.ypos + this.ratio) > window.innerHeight){
+            this.dy = -this.dy
+            counter++
+        }
         this.xpos += this.dx;
         this.ypos += this.dy
     }
@@ -63,10 +73,10 @@ class Circle {
 
 let allCircles = []
 
-let counter = 1;
+let counter = 0;
 let randomX = Math.random() * window.innerWidth;
 let randomY = Math.random() * window.innerHeight
-let myCircle = new Circle(randomX, randomY, 50, 'rgb(350, 0,0,55%', counter, 50)
+let myCircle = new Circle(randomX, randomY, 50, 'rgb(0,0,0)', counter, 2)
 
 myCircle.draw(context)
 
